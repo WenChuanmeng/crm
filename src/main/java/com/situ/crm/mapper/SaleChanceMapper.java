@@ -2,6 +2,8 @@ package com.situ.crm.mapper;
 
 import com.situ.crm.pojo.SaleChance;
 import com.situ.crm.pojo.SaleChanceExample;
+
+import java.util.LinkedList;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

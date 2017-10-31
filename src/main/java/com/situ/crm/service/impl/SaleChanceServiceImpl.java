@@ -56,6 +56,8 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
 
 	@Override
 	public ServerResponse add(SaleChance saleChance) {
+		
+		
 		if (saleChanceMapper.insert(saleChance) > 0) {
 			return ServerResponse.createSUCCESS("添加成功! ");
 		}
@@ -69,6 +71,7 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
 		}
 		return ServerResponse.createERROR("修改失败!");
 	}
+
 
 	/*@Override
 	public List<SaleChance> findSaleChanceName() {

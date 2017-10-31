@@ -456,4 +456,18 @@ public class SaleChance {
     public void setDevResult(Integer devResult) {
         this.devResult = devResult;
     }
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "SaleChance [id=" + id + ", chanceSource=" + chanceSource + ", customerName=" + customerName
+				+ ", successRate=" + successRate + ", overview=" + overview + ", linkMan=" + linkMan + ", linkPhone="
+				+ linkPhone + ", description=" + description + ", createMan=" + createMan + ", createTime=" + createTime
+				+ ", assignMan=" + assignMan + ", assignTime=" + assignTime + ", status=" + status + ", devResult="
+				+ devResult + "]";
+	}
+    
+    
 }

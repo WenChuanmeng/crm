@@ -1,7 +1,11 @@
 package com.situ.crm.service;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.situ.crm.common.DataGridResult;
 import com.situ.crm.common.ServerResponse;
+import com.situ.crm.pojo.SaleChance;
 import com.situ.crm.pojo.User;
 
 public interface IUserService {
@@ -22,4 +26,10 @@ public interface IUserService {
 	User findUser(User userTemp);
 
 	ServerResponse updatePassword(User user, String newpassword);
+
+	/**
+	 * 查找客户经理
+	 * @return LinkedList<SaleChance>
+	 */
+	List<User> findAssignMan();
 }

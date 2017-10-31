@@ -1,5 +1,6 @@
 package com.situ.crm.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.situ.crm.common.DataGridResult;

@@ -21,27 +21,19 @@
 			columns:[[    
 			     {field:'cb',checkbox:true,align:'center'},    
 			     {field:'id',title:'编号',width:80,align:'center'},    
-			    /*  {field:'chanceSource',title:'数据机会来源名',width:80,align:'center'} ,*/    
+			     {field:'chanceSource',title:'数据机会来源名',width:80,align:'center'},    
 			     {field:'customerName',title:'客户名称',width:100,align:'center'},    
-			     /* {field:'successRate',title:'成功几率',width:80,align:'center'},  */   
+			     {field:'successRate',title:'成功几率',width:80,align:'center'},    
 			     {field:'overview',title:'概要',width:100,align:'center'},    
 			     {field:'linkMan',title:'联系人',width:100,align:'center'},    
 			     {field:'linkPhone',title:'联系电话',width:100,align:'center'},    
-			     /* {field:'description',title:'机会描述',width:100,align:'center'}, */    
+			     {field:'description',title:'机会描述',width:100,align:'center'},    
 			     {field:'createMan',title:'创建人',width:100,align:'center'},    
-			     /* {field:'createTime',title:'创建时间',width:100,align:'center'},    
+			     {field:'createTime',title:'创建时间',width:100,align:'center'},    
 			     {field:'assignMan',title:'指派人',width:70,align:'center'},    
-			     {field:'assignTime',title:'指派时间',width:100,align:'center'},  */   
-			     {field:'status',title:'分配状态',width:70,align:'center',
-			    	formatter:function(value,row,index){
-			    		if (value==1) {
-							return "已分配";
-						} else {
-							return "未分配";
-						}
-			    	}
-			     },    
-			    /*  {field:'devResult',title:'开发中 ',width:100,align:'center'},  */   
+			     {field:'assignTime',title:'指派时间',width:100,align:'center'},    
+			     {field:'status',title:'分配状态',width:70,align:'center'},    
+			     {field:'devResult',title:'开发中 ',width:100,align:'center'},    
 			]]  
 		});
 		
@@ -133,9 +125,6 @@
 		$("#dialog").dialog("open").dialog("setTitle","添加信息");
 		url = "${ctx}/saleChance/add.action";
 		$('#form').form("clear");
-		var values = '${user.name}';
-		$("#createManId").﻿﻿textbox('setValue',values);
-		$("#createTimeId").﻿﻿textbox('setValue',getCurrentDateTime());
 		
 	}
 	/* 打开修改dialog */
@@ -150,42 +139,6 @@
 		url = "${ctx}/saleChance/update.action";
 		$('#form').form("load", row);
 	}
-	
-	//指派人生成时间
-	$(function(){
-	    $("#assignManId").combobox({
-	        onSelect:function(record){//record就是User对象
-	            if(record.trueName!=''){
-	                $("#assignTimeId").val(getCurrentDateTime());
-	            }else{
-	                $("#assignTimeId").val("");
-	            }
-	        }
-	    });
-	 });
-
-	
-	// 0-9 的日期和时间，在前面补0：9 -> 09
-	 function formatZero(n){
-	     if(n>=0&&n<=9){
-	         return "0"+n;
-	     }else{
-	         return n;
-	     }
-	 }
-	// 格式化时间
-	function getCurrentDateTime () {
-	    var date = new Date();//Mon Oct 30 2017 22:08:37 GMT+0800
-	    var year=date.getFullYear();
-	    var month=date.getMonth()+1;
-	    var day=date.getDate();
-	    var hours=date.getHours();
-	    var minutes=date.getMinutes();
-	    var seconds=date.getSeconds();
-	    // 2017-01-01 02:23:06   yyyy-MM-dd hh:mm:ss
-	    return year+"-"+this.formatZero(month)+"-"+this.formatZero(day)+" "+this.formatZero(hours)+":"+this.formatZero(minutes)+":"+this.formatZero(seconds);
-	}
-
 </script>
 </head>
 <body>
@@ -193,7 +146,7 @@
 	
 	<!-- toolbar 开始 -->
 	<div id="toolbar">
-		<div> 
+		<div>
 			<a class="easyui-linkbutton" href="javascript:openAddDialog()" iconCls="icon-add">添加</a>
 			<a class="easyui-linkbutton" href="javascript:openUpdateDialog()" iconCls="icon-edit">修改</a>
 			<a class="easyui-linkbutton" href="javascript:doDelete()" iconCls="icon-remove">删除</a>
@@ -241,13 +194,12 @@
 				<tr>
 					<td>机会描述：</td>
 					<td colspan="3"><!-- <input type="textarea" id="saleChanceValue" name="saleChanceValue" style="width: 300px;height: 60px" class="" required="true"/><font color="red">*</font> -->
-						<!-- <textarea rows="3" cols="50" id="descriptionId" name="description"></textarea> -->
-						<input class="easyui-textbox" id="descriptionId" name="description" data-options="multiline:true" style="width:250px;height:60px">
+						<textarea rows="3" cols="50" id="descriptionId" name="description"></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td>创建人：</td>
-					<td><input type="text" id="createManId" name="createMan"  class="easyui-textbox" required="true"/><font color="red">*</font></td>
+					<td><input type="text" id="createManId" name="createMan" class="easyui-validatebox" required="true"/><font color="red">*</font></td>
 					<td>创建时间：</td>
 					<td>
 					<input  id="createTimeId" name="createTime"  type= "text" class= "easyui-datebox" required ="required"/>
@@ -257,10 +209,11 @@
 					<td>指派给：</td>
 					<td><input type="text" id="assignManId" name="assignMan" class="easyui-combobox"
 					 data-options="
-					 	url:'${ctx}/saleChance/findAssignMan.action',
-					 	valueField: 'trueName',
-					 	textField: 'trueName',
+					 	url:'${ctx}/saleChance/findSaleChanceName.action',
+					 	valueField: 'assignMan',
+					 	textField: 'assignMan',
 					 	panelHeight:'auto',
+					 	
 					 	"/></td>
 					<td>指派时间：</td>
 					<td>
@@ -269,7 +222,6 @@
 				</tr>
 			</table>
 		</form>
-		
 	</div>
 	<!-- 添加和修改的dialog 结束 -->
 

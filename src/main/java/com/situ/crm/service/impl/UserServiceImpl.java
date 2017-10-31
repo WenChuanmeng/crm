@@ -13,6 +13,7 @@ import com.situ.crm.common.DataGridResult;
 import com.situ.crm.common.ResponseCode;
 import com.situ.crm.common.ServerResponse;
 import com.situ.crm.mapper.UserMapper;
+import com.situ.crm.pojo.SaleChance;
 import com.situ.crm.pojo.User;
 import com.situ.crm.pojo.UserExample;
 import com.situ.crm.pojo.UserExample.Criteria;
@@ -95,6 +96,18 @@ public class UserServiceImpl implements IUserService{
 			}
 			
 		}
+	}
+
+	@Override
+	public List<User> findAssignMan() {
+		UserExample example = new UserExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andRoleNameEqualTo("客户经理");
+		List<User> list = userMapper.selectByExample(example);
+		User user = new User();
+		user.setRoleName(null);
+		list.add(0, user);
+		return list;
 	}
 
 }
