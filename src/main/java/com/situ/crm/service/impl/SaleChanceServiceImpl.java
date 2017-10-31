@@ -1,5 +1,6 @@
 package com.situ.crm.service.impl;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
 	private SaleChanceMapper saleChanceMapper;
 
 	@Override
-	public DataGridResult findAll(Integer page, Integer rows, SaleChance saleChance) {
+	public DataGridResult findAll(Integer page, Integer rows, SaleChance saleChance, Date beginTime, Date endTime) {
 		DataGridResult result = new DataGridResult();
 		SaleChanceExample saleChanceExample = new SaleChanceExample();
 		//1、设置分页 
@@ -35,6 +36,19 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
 		if (StringUtils.isNotEmpty(saleChance.getCustomerName())) {
 			createCriteria.andCustomerNameLike(Util.formatLike(saleChance.getCustomerName()));
 		}
+		if (StringUtils.isNotEmpty(saleChance.getLinkMan())) {
+			createCriteria.andLinkManLike(Util.formatLike(saleChance.getLinkMan()));
+		}
+		if (StringUtils.isNotEmpty(saleChance.getCreateMan())) {
+			createCriteria.andCreateManLike(Util.formatLike(saleChance.getCreateMan()));
+		}
+		if (saleChance.getStatus() != null) {
+			createCriteria.andStatusEqualTo(saleChance.getStatus());
+		}
+		if (beginTime != null && endTime != null) {
+			createCriteria.andCreateTimeBetween(beginTime, endTime);
+		}
+		
 		List<SaleChance> saleChanceList = saleChanceMapper.selectByExample(saleChanceExample);
 		//total
 		PageInfo<SaleChance> pageInfo = new PageInfo<>(saleChanceList);

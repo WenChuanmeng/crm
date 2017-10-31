@@ -1,5 +1,6 @@
 package com.situ.crm.service;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface ISaleChanceService {
 	 * @param rows 一页多少数据
 	 * @return DataGridResult
 	 */
-	DataGridResult findAll(Integer page, Integer rows, SaleChance saleChance);
+	DataGridResult findAll(Integer page, Integer rows, SaleChance saleChance, Date beginTime, Date endTime);
 
 	/**
 	 * 根据id删除

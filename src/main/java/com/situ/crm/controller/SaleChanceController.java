@@ -45,8 +45,9 @@ public class SaleChanceController {
 	
 	@RequestMapping("/findAll")
 	@ResponseBody
-	public DataGridResult findAll(Integer page, Integer rows, SaleChance saleChance) {
-		return saleChanceService.findAll(page, rows, saleChance);
+	public DataGridResult findAll(Integer page, Integer rows, SaleChance saleChance,Date beginTime, Date endTime) {
+		System.out.println(saleChance + " +++++++++++++ "+ beginTime + "+++++++++=" +endTime);
+		return saleChanceService.findAll(page, rows, saleChance, beginTime, endTime);
 	}
 	
 	@RequestMapping("/delete")

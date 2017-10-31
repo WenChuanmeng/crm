@@ -29,9 +29,9 @@
 			     {field:'linkPhone',title:'联系电话',width:100,align:'center'},    
 			     /* {field:'description',title:'机会描述',width:100,align:'center'}, */    
 			     {field:'createMan',title:'创建人',width:100,align:'center'},    
-			     /* {field:'createTime',title:'创建时间',width:100,align:'center'},    
-			     {field:'assignMan',title:'指派人',width:70,align:'center'},    
-			     {field:'assignTime',title:'指派时间',width:100,align:'center'},  */   
+			     {field:'createTime',title:'创建时间',width:100,align:'center'},    
+			    /*  {field:'assignMan',title:'指派人',width:70,align:'center'},    
+			     {field:'assignTime',title:'指派时间',width:100,align:'center'}, */   
 			     {field:'status',title:'分配状态',width:70,align:'center',
 			    	formatter:function(value,row,index){
 			    		if (value==1) {
@@ -98,8 +98,12 @@
 	/* 查找 */
 	function doSearch(){
 		$("#datagrid").datagrid("load",{
-			'saleChanceName':$("#saleChanceName").val(),
-			'saleChanceValue':$("#saleChanceValue").val()
+			'customerName':$("#s_customerNameId").val(),
+			'linkMan':$("#s_linkManId").val(),
+			'createMan':$("#s_createManId").val(),
+			'status':$("#s_statusId").val(),
+			'beginTime':$("#s_beginTimeId").val(),
+			'endTime':$("#s_endTimeId").val()
 		})
 	}
 	
@@ -155,10 +159,10 @@
 	$(function(){
 	    $("#assignManId").combobox({
 	        onSelect:function(record){//record就是User对象
-	            if(record.trueName!=''){
-	                $("#assignTimeId").val(getCurrentDateTime());
+	            if(record.trueName!=null){
+	                $("#assignTimeId").﻿﻿textbox('setValue',getCurrentDateTime());
 	            }else{
-	                $("#assignTimeId").val("");
+	                $("#assignTimeId").﻿﻿textbox('setValue',"");
 	            }
 	        }
 	    });
@@ -199,15 +203,26 @@
 			<a class="easyui-linkbutton" href="javascript:doDelete()" iconCls="icon-remove">删除</a>
 		</div>
 		<div>
-			数据字典名：<input type="text" id="saleChanceName" class="easyui-combobox"
+			<%-- 数据字典名：<input type="text" id="saleChanceName" class="easyui-combobox"
 					 data-options="
 					 	url:'${ctx}/saleChance/findSaleChanceName.action',
 					 	valueField: 'saleChanceName',
 					 	textField: 'saleChanceName',
 					 	panelHeight:'auto',
 					 	editable:false,
-					 	blankText:'qingxuanze' "/>
-		       数据字典值：<input type="text" id="saleChanceValue"></input>
+					 	blankText:'qingxuanze' "/> --%>
+		       	客户名称：<input type="text" id="s_customerNameId" name="customerName" style="width: 100px"/>&nbsp;&nbsp;&nbsp;
+		       	联系人：<input type="text" id="s_linkManId" name="linkMan" style="width: 100px" />&nbsp;&nbsp;&nbsp;
+		       	创建人：<input type="text" id="s_createManId" name="createMan" style="width: 100px" />&nbsp;&nbsp;&nbsp;
+		       	分配状态：
+		       	<select id="s_statusId" name="status" class="easyui-combobox" style="width:90px;">   
+				    <option value="">--请选择--</option>
+				    <option value="1">已分配</option>   
+				    <option value="0" >未分配</option>   
+				</select><br>
+				开始时间：<input id="s_beginTimeId" class="easyui-datebox" name="beginTime" data-options="sharedCalendar:'#cc'">&nbsp;&nbsp;&nbsp;
+				结束时间：<input id="s_endTimeId"  class="easyui-datebox" name="endTime" data-options="sharedCalendar:'#cc'">&nbsp;&nbsp;&nbsp;
+				<div id="cc" class="easyui-calendar"></div>
 		  <a href="javascript:doSearch();" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 		</div>
 	</div>
