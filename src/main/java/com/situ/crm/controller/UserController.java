@@ -45,4 +45,11 @@ public class UserController {
 		return userService.update(user);
 	}
 	
+	@RequestMapping("/updatePassword")
+	@ResponseBody
+	private ServerResponse updatePassword(User user, String newpassword) {
+		
+		return userService.updatePassword(user, newpassword);
+	}
+	
 }

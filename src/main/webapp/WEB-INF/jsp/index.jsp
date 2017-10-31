@@ -6,29 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>CRM</title>
-<script type="text/javascript">
-	function openTab(text, url, iconCls) {
-		if ($("#tabs").tabs("exists", text)) {
-			$("#tabs").tabs("select", text);
-		} else {
-			var content = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='"
-					+ url + "'></iframe>";
-			$("#tabs").tabs("add", {
-				title : text,
-				iconCls : iconCls,
-				closable : true,
-				content : content
-			});
-		}
-	}
-</script>
+
 </head>
 <body class="easyui-layout">
+
 	<div region="north" style="height: 78px; background-color: #fff">
+	${user.name }
 	</div>
 	<div region="center">
 		<div class="easyui-tabs" fit="true" border="false" id="tabs">
 			<div title="首页" data-options="iconCls:'icon-home'">
+			
 			</div>
 		</div>
 	</div>
@@ -103,7 +91,7 @@
 			<div title="基础数据管理" data-options="iconCls:'icon-jcsjgl'"
 				style="padding: 10px">
 				<a
-					href="javascript:openTab('数据字典管理','${ctx}/dataDict/index.action','icon-sjzdgl')"
+					href="javascript:openTab('数据字典管理','${ctx}/dataDic/index.action','icon-sjzdgl')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-sjzdgl'"
 					style="width: 150px;">数据字典管理</a> <a
@@ -117,7 +105,7 @@
 			</div>
 			<div title="系统管理" data-options="iconCls:'icon-item'"
 				style="padding: 10px">
-				<a href="javascript:openPasswordModifyDialog()"
+				<a href="javascript:openUpdatePasswordDialog()"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-modifyPassword'"
 					style="width: 150px;">修改密码</a> <a href="javascript:logout()"
@@ -129,6 +117,88 @@
 	<div region="south" style="height: 30px; padding: 5px" align="center">
 		CRM管理系统
 	</div>
-
+	
+	<!-- 修改密码 -->
+					<div id="dialog" class="easyui-dialog" closed="true" data-options="buttons:'#dialog-button'" title="修改密码" style="width:400px;padding:30px 60px">
+				<form id="passwordForm" action="${ctx }/users/updatePassword.action" method="post">
+						<div style="margin-bottom:20px">
+							<div>用户名:</div>
+							<input class="easyui-textbox" name="name" readonly="readonly" value="${user.name }" style="width:100%;height:32px">
+						</div>
+						<div style="margin-bottom:20px">
+							<div>前密码:</div>
+							<input class="easyui-textbox" required="true" type="password" name="password" style="width:100%;height:32px">
+						</div>
+						<div style="margin-bottom:20px">
+							<div>重置密码:</div>
+							<input class="easyui-textbox" id="newpasswordId" required="true" type="password" name="newpassword" style="width:100%;height:32px">
+						</div>
+						<div style="margin-bottom:20px">
+							<div>确认密码:</div>
+							<input class="easyui-textbox" id="repasswordId" required="true" type="password" name="repassword" style="width:100%;height:32px">
+						</div>
+						<!-- dialog-button 开始-->
+					<div id="dialog-button">
+						<a href="javascript:doSave()" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+						<a href="javascript:closeDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+					</div>
+					<!-- dialog-button 结束-->
+				</form>
+					</div>
+					<!-- 修改密码 -->
+					
+	
+<script type="text/javascript">
+	function openTab(text, url, iconCls) {
+		if ($("#tabs").tabs("exists", text)) {
+			$("#tabs").tabs("select", text);
+		} else {
+			var content = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='"
+					+ url + "'></iframe>";
+			$("#tabs").tabs("add", {
+				title : text,
+				iconCls : iconCls,
+				closable : true,
+				content : content
+			});
+		}
+	}
+	
+	function openUpdatePasswordDialog() {
+		$("#dialog").dialog("open")
+	}
+	
+	function closeDialog(){
+		 $("#dialog").dialog("close");
+	}
+	
+	function doSave(){
+		if ($("#repasswordId").val() != $("#newpasswordId").val() ) {
+			$.messager.alert("系统提示", "两次密码不一致");
+			return;
+		}
+		$('#passwordForm').form('submit', {    
+		    url:"${ctx}/user/updatePassword.action",    
+		    onSubmit: function(){    
+		        return $(this).form("validate");
+		    },    
+		    success:function(data){//正常返回ServerResponse
+		    	var data = eval('(' + data + ')');
+		    	if(data.status == Util.SUCCESS) {
+		    		$.messager.alert("系统提示", data.msg);
+		    		$("#dialog").dialog("close");
+		    	} else {
+		    		$.messager.alert("系统提示", data.msg);
+		    		
+		    	}
+		    }    
+		});  
+	}
+	
+	/* 退出 */
+	function logout() {
+		window.location.href="${ctx}/login/loginOut.action";		
+	}
+</script>
 </body>
 </html>

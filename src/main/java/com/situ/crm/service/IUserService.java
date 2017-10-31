@@ -18,4 +18,8 @@ public interface IUserService {
 	ServerResponse add(User user);
 
 	ServerResponse update(User user);
+
+	User findUser(User userTemp);
+
+	ServerResponse updatePassword(User user, String newpassword);
 }
