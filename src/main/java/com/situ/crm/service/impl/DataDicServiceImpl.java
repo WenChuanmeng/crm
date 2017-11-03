@@ -67,7 +67,7 @@ public class DataDicServiceImpl implements IDataDicService{
 
 	@Override
 	public ServerResponse update(DataDic dataDic) {
-		if (dataDicMapper.updateByPrimaryKey(dataDic) > 0) {
+		if (dataDicMapper.updateByPrimaryKeySelective(dataDic) > 0) {
 			return ServerResponse.createSUCCESS("修改成功! ");
 		}
 		return ServerResponse.createERROR("修改失败!");
@@ -77,9 +77,18 @@ public class DataDicServiceImpl implements IDataDicService{
 	public List<DataDic> findDataDicName() {
 		LinkedList<DataDic> findDataDicName = dataDicMapper.findDataDicName();
 		DataDic dataDic = new DataDic();
-		dataDic.setDataDicName(null);
+		dataDic.setDataDicName("--请选择--");
 		findDataDicName.addFirst(dataDic);
 		return findDataDicName;
+	}
+
+	@Override
+	public List<DataDic> findLevel() {
+		DataDicExample dataDicExample = new DataDicExample();
+		Criteria createCriteria = dataDicExample.createCriteria();
+		createCriteria.andDataDicNameLike("客户等级");
+		List<DataDic> list = dataDicMapper.selectByExample(dataDicExample);
+		return list;
 	}
 
 }

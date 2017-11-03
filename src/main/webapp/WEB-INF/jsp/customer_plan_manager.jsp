@@ -7,10 +7,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+/* 打开新的标签页 */
+function openTab(id) {
+	 window.parent.openTab('客户开发计划项','${ctx }/cusDevPlan/index.action?saleChanceId='+id,'icon-khlsfx');
+}
+function openTabShow(id) {
+	 window.parent.openTab('客户开发计划项','${ctx }/cusDevPlan/index.action?saleChanceId='+id+'&show=true','icon-khlsfx');
+}
 	$(function(){
 		/*展示数据的datagrid表格*/
 		$("#datagrid").datagrid({
-			url:'${ctx}/saleChance/findAll.action',
+			url:'${ctx}/customerPlan/findAll.action',
 			method:'get',
 			fit:true,
 			singleSelect:false,
@@ -26,13 +33,13 @@
 			     /* {field:'successRate',title:'成功几率',width:80,align:'center'},  */   
 			     {field:'overview',title:'概要',width:100,align:'center'},    
 			     {field:'linkMan',title:'联系人',width:100,align:'center'},    
-			     {field:'linkPhone',title:'联系电话',width:100,align:'center'},    
+			     /* {field:'linkPhone',title:'联系电话',width:100,align:'center'}, */    
 			     /* {field:'description',title:'机会描述',width:100,align:'center'}, */    
 			     {field:'createMan',title:'创建人',width:100,align:'center'},    
 			     {field:'createTime',title:'创建时间',width:100,align:'center'},    
-			    /*  {field:'assignMan',title:'指派人',width:70,align:'center'},    
-			     {field:'assignTime',title:'指派时间',width:100,align:'center'}, */   
-			     {field:'status',title:'分配状态',width:70,align:'center',
+			    {field:'assignMan',title:'指派人',width:70,align:'center'},    
+			     {field:'assignTime',title:'指派时间',width:100,align:'center'},  
+			    /*  {field:'status',title:'分配状态',width:70,align:'center',
 			    	formatter:function(value,row,index){
 			    		if (value==1) {
 							return "已分配";
@@ -40,10 +47,33 @@
 							return "未分配";
 						}
 			    	}
-			     },    
-			    /*  {field:'devResult',title:'开发中 ',width:100,align:'center'},  */   
+			     },     */ 
+			    {field:'devResult',title:'开发中 ',width:100,align:'center',
+			    	 formatter:function(value,row,index){
+				    		if (value==0 || value==null) {
+								return "未开发";
+							} else if (value==1) {
+								return "开发中";
+							} else if (value==2) {
+								return "开发成功";
+							} else if (value==3) {
+								return "开发失败";
+							}
+				    	}
+			    },
+			    {field:'aaa',title:'操作 ',width:100,align:'center',
+			    	 formatter:function(value,row,index){
+				    		if (row.devResult==0 || row.devResult==1 || row.devResult==null) {
+								return "<a style='text-decoration: none;' href='javascript:openTab("+row.id+")' >开发中</a>";
+							} else if (row.devResult==2 || row.devResult==3) {
+								return "<a style='text-decoration: none;' href='javascript:openTabShow("+row.id+")' >查看详情</a>";
+							}
+				    	}
+			    },
 			]]  
 		});
+		
+		
 		
 		/*添加和修改弹出的dialog */
 		$("#dialog").dialog({
@@ -101,7 +131,7 @@
 			'customerName':$("#s_customerNameId").val(),
 			'linkMan':$("#s_linkManId").val(),
 			'createMan':$("#s_createManId").val(),
-			'status':$("#s_statusId").val(),
+			'devResult':$("#s_devResultId").val(),
 			'beginTime':$("#s_beginTimeId").val(),
 			'endTime':$("#s_endTimeId").val()
 		})
@@ -117,7 +147,7 @@
 		$.messager.confirm("系统提示", "您确认要删除么", function(r){
 			if (r){
 				$.post(
-					"${ctx}/saleChance/delete.action",
+					"${ctx}/customerPlan/delete.action",
 					{ids:ids}, 
 					function(result) {
 						$.messager.alert("系统提示", result.msg);
@@ -135,7 +165,7 @@
 	/* 打开添加dialog */
 	function openAddDialog() {
 		$("#dialog").dialog("open").dialog("setTitle","添加信息");
-		url = "${ctx}/saleChance/add.action";
+		url = "${ctx}/customerPlan/add.action";
 		$('#form').form("clear");
 		var values = '${user.name}';
 		$("#createManId").﻿﻿textbox('setValue',values);
@@ -146,12 +176,12 @@
 	function openUpdateDialog() {
 		var selections = $("#datagrid").datagrid("getSelections");
 		if(selections.length == 0) {
-			$.messager.alert("系统提示", "请选择要删除的数据");
+			$.messager.alert("系统提示", "请选择要修改的数据");
 			return;
 		}
 		var row = selections[0];
 		$("#dialog").dialog("open").dialog("setTitle","修改信息");
-		url = "${ctx}/saleChance/update.action";
+		url = "${ctx}/customerPlan/update.action";
 		$('#form').form("load", row);
 	}
 	
@@ -159,6 +189,10 @@
 	$(function(){
 	    $("#assignManId").combobox({
 	        onSelect:function(record){//record就是User对象
+	        	if(record.trueName=="--请选择--"){
+	                $("#assignTimeId").﻿﻿textbox('setValue',null);
+	                return;
+	            }
 	            if(record.trueName!=null){
 	                $("#assignTimeId").﻿﻿textbox('setValue',getCurrentDateTime());
 	            }else{
@@ -194,18 +228,12 @@
 </head>
 <body>
 	<table id="datagrid"></table>
-	
 	<!-- toolbar 开始 -->
 	<div id="toolbar">
-		<div> 
-			<a class="easyui-linkbutton" href="javascript:openAddDialog()" iconCls="icon-add">添加</a>
-			<a class="easyui-linkbutton" href="javascript:openUpdateDialog()" iconCls="icon-edit">修改</a>
-			<a class="easyui-linkbutton" href="javascript:doDelete()" iconCls="icon-remove">删除</a>
-		</div>
 		<div>
 			<%-- 数据字典名：<input type="text" id="saleChanceName" class="easyui-combobox"
 					 data-options="
-					 	url:'${ctx}/saleChance/findSaleChanceName.action',
+					 	url:'${ctx}/customerPlan/findSaleChanceName.action',
 					 	valueField: 'saleChanceName',
 					 	textField: 'saleChanceName',
 					 	panelHeight:'auto',
@@ -214,11 +242,13 @@
 		       	客户名称：<input type="text" id="s_customerNameId" name="customerName" style="width: 100px"/>&nbsp;&nbsp;&nbsp;
 		       	联系人：<input type="text" id="s_linkManId" name="linkMan" style="width: 100px" />&nbsp;&nbsp;&nbsp;
 		       	创建人：<input type="text" id="s_createManId" name="createMan" style="width: 100px" />&nbsp;&nbsp;&nbsp;
-		       	分配状态：
-		       	<select id="s_statusId" name="status" class="easyui-combobox" style="width:90px;">   
+		       	开发状态：
+		       	<select id="s_devResultId" name="devResult" class="easyui-combobox" style="width:90px;">   
 				    <option value="">--请选择--</option>
-				    <option value="1">已分配</option>   
-				    <option value="0" >未分配</option>   
+				    <option value="0">未开发</option>   
+				    <option value="1" >开发中</option>   
+				    <option value="2" >开发成功</option>   
+				    <option value="3" >开发失败</option>   
 				</select><br>
 				开始时间：<input id="s_beginTimeId" class="easyui-datebox" name="beginTime" data-options="sharedCalendar:'#cc'">&nbsp;&nbsp;&nbsp;
 				结束时间：<input id="s_endTimeId"  class="easyui-datebox" name="endTime" data-options="sharedCalendar:'#cc'">&nbsp;&nbsp;&nbsp;
@@ -272,7 +302,7 @@
 					<td>指派给：</td>
 					<td><input type="text" id="assignManId" name="assignMan" class="easyui-combobox"
 					 data-options="
-					 	url:'${ctx}/saleChance/findAssignMan.action',
+					 	url:'${ctx}/customerPlan/findAssignMan.action',
 					 	valueField: 'trueName',
 					 	textField: 'trueName',
 					 	panelHeight:'auto',

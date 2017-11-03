@@ -38,5 +38,19 @@ public interface ISaleChanceService {
 	 */
 	ServerResponse update(SaleChance saleChance);
 
+	/**
+	 * 根据id查找营销机会
+	 * @param saleChanceId
+	 * @return ServerResponse<SaleChance>
+	 */
+	ServerResponse<SaleChance> findSaleChanceById(Integer saleChanceId);
+
+	/**
+	 * 更新营销机会的开发状态
+	 * @param saleChance
+	 * @return ServerResponse
+	 */
+	ServerResponse updateSaleChanceDevResult(SaleChance saleChance);
+
 	/*List<SaleChance> findSaleChanceName();*/
 }

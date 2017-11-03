@@ -71,6 +71,13 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
 	@Override
 	public ServerResponse add(SaleChance saleChance) {
 		
+		if (saleChance.getAssignMan() == null && saleChance.getAssignMan().trim().equals("")) {
+			saleChance.setStatus(0);
+		}
+		if (saleChance.getAssignMan().equals("--暂不指派--")) {
+			saleChance.setAssignMan(null);
+			saleChance.setStatus(0);
+		}
 		
 		if (saleChanceMapper.insert(saleChance) > 0) {
 			return ServerResponse.createSUCCESS("添加成功! ");
@@ -80,10 +87,30 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
 
 	@Override
 	public ServerResponse update(SaleChance saleChance) {
-		if (saleChanceMapper.updateByPrimaryKey(saleChance) > 0) {
+		saleChance.setStatus(1);
+		if (saleChanceMapper.updateByPrimaryKeySelective(saleChance) > 0) {
 			return ServerResponse.createSUCCESS("修改成功! ");
 		}
 		return ServerResponse.createERROR("修改失败!");
+	}
+
+	@Override
+	public ServerResponse<SaleChance> findSaleChanceById(Integer saleChanceId) {
+		SaleChance saleChance = saleChanceMapper.selectByPrimaryKey(saleChanceId);
+		if (saleChance != null) {
+			return ServerResponse.createSUCCESS(saleChance);
+		}
+		return ServerResponse.createERROR("服务器繁忙，请稍后重试");
+	}
+
+	@Override
+	public ServerResponse updateSaleChanceDevResult(SaleChance saleChance) {
+		int result = saleChanceMapper.updateByPrimaryKeySelective(saleChance);
+		
+		if (result > 0) {
+			return ServerResponse.createSUCCESS("更改成功");
+		}
+		return ServerResponse.createERROR("服务器繁忙，请稍后再试");
 	}
 
 

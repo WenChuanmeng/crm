@@ -29,7 +29,7 @@
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-yxjhgl'"
 					style="width: 150px">营销机会管理</a> <a
-					href="javascript:openTab('客户开发计划','','icon-khkfjh')"
+					href="javascript:openTab('客户开发计划','${ctx }/customerPlan/index.action','icon-khkfjh')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-khkfjh'"
 					style="width: 150px">客户开发计划</a>
@@ -37,11 +37,11 @@
 			<div title="客户管理" data-options="iconCls:'icon-khgl'"
 				style="padding: 10px;">
 				<a
-					href="javascript:openTab('客户信息管理','customerManage.jsp','icon-khxxgl')"
+					href="javascript:openTab('客户信息管理','${ctx }/customer/index.action','icon-khxxgl')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-khxxgl'"
 					style="width: 150px;">客户信息管理</a> <a
-					href="javascript:openTab('客户流失管理','customerLossManage.jsp','icon-khlsgl')"
+					href="javascript:openTab('客户流失管理','${ctx }/customerLoss/index.action','icon-khlsgl')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-khlsgl'"
 					style="width: 150px;">客户流失管理</a>
@@ -49,23 +49,23 @@
 			<div title="服务管理" data-options="iconCls:'icon-fwgl'"
 				style="padding: 10px">
 				<a
-					href="javascript:openTab('服务创建','customerServiceCreate.jsp','icon-fwcj')"
+					href="javascript:openTab('服务创建','${ctx }/customerServiceCreate/index.action','icon-fwcj')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-fwcj'" style="width: 150px;">服务创建</a>
 				<a
-					href="javascript:openTab('服务分配','customerServiceAssign.jsp','icon-fwfp')"
+					href="javascript:openTab('服务分配','${ctx }/customerServiceAssign/index.action','icon-fwfp')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-fwfp'" style="width: 150px;">服务分配</a>
 				<a
-					href="javascript:openTab('服务处理','customerServiceProce.jsp','icon-fwcl')"
+					href="javascript:openTab('服务处理','${ctx }/customerServiceDeal/index.action','icon-fwcl')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-fwcl'" style="width: 150px;">服务处理</a>
 				<a
-					href="javascript:openTab('服务反馈','customerServiceFeedback.jsp','icon-fwfk')"
+					href="javascript:openTab('服务反馈','${ctx }/customerServiceDealResult/index.action','icon-fwfk')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-fwfk'" style="width: 150px;">服务反馈</a>
 				<a
-					href="javascript:openTab('服务归档','customerServiceFile.jsp','icon-fwgd')"
+					href="javascript:openTab('服务归档','${ctx }/customerServiceShow/index.action','icon-fwgd')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-fwgd'" style="width: 150px;">服务归档</a>
 			</div>

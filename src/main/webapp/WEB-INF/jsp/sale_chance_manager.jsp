@@ -159,6 +159,10 @@
 	$(function(){
 	    $("#assignManId").combobox({
 	        onSelect:function(record){//record就是User对象
+	        	if(record.trueName=="--暂不指派--"){
+	                $("#assignTimeId").﻿﻿textbox('setValue',null);
+	                return;
+	            }
 	            if(record.trueName!=null){
 	                $("#assignTimeId").﻿﻿textbox('setValue',getCurrentDateTime());
 	            }else{
@@ -189,7 +193,6 @@
 	    // 2017-01-01 02:23:06   yyyy-MM-dd hh:mm:ss
 	    return year+"-"+this.formatZero(month)+"-"+this.formatZero(day)+" "+this.formatZero(hours)+":"+this.formatZero(minutes)+":"+this.formatZero(seconds);
 	}
-
 </script>
 </head>
 <body>
@@ -270,12 +273,13 @@
 				</tr>
 				<tr>
 					<td>指派给：</td>
-					<td><input type="text" id="assignManId" name="assignMan" class="easyui-combobox"
+					<td><input  id="assignManId" name="assignMan" required="true" missingMessage="不能为空" class="easyui-combobox"
 					 data-options="
 					 	url:'${ctx}/saleChance/findAssignMan.action',
 					 	valueField: 'trueName',
 					 	textField: 'trueName',
 					 	panelHeight:'auto',
+					 	editable:false,
 					 	"/></td>
 					<td>指派时间：</td>
 					<td>

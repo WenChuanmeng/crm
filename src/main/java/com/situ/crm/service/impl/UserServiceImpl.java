@@ -65,7 +65,7 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public ServerResponse update(User user) {
-		if (userMapper.updateByPrimaryKey(user) > 0) {
+		if (userMapper.updateByPrimaryKeySelective(user) > 0) {
 			return ServerResponse.createSUCCESS("修改成功! ");
 		}
 		return ServerResponse.createERROR("修改失败!");
@@ -105,7 +105,7 @@ public class UserServiceImpl implements IUserService{
 		createCriteria.andRoleNameEqualTo("客户经理");
 		List<User> list = userMapper.selectByExample(example);
 		User user = new User();
-		user.setRoleName(null);
+		user.setTrueName("--暂不指派--");
 		list.add(0, user);
 		return list;
 	}

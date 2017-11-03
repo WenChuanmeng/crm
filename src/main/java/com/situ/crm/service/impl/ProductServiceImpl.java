@@ -63,7 +63,7 @@ public class ProductServiceImpl implements IProductService{
 
 	@Override
 	public ServerResponse update(Product product) {
-		if (productMapper.updateByPrimaryKey(product) > 0) {
+		if (productMapper.updateByPrimaryKeySelective(product) > 0) {
 			return ServerResponse.createSUCCESS("修改成功! ");
 		}
 		return ServerResponse.createERROR("修改失败!");

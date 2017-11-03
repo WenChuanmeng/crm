@@ -85,7 +85,6 @@ public class SaleChance {
      *
      * @mbggenerated Tue Oct 31 08:30:02 CST 2017
      */
-    @JsonFormat(pattern="yyyy-MM-dd" )
     private Date createTime;
 
     /**
@@ -102,7 +101,7 @@ public class SaleChance {
      *
      * @mbggenerated Tue Oct 31 08:30:02 CST 2017
      */
-    @JsonFormat(pattern="yyyy-MM-dd" )
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss" )
     private Date assignTime;
 
     /**
@@ -345,6 +344,7 @@ public class SaleChance {
      *
      * @mbggenerated Tue Oct 31 08:30:02 CST 2017
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern="yyyy-MM-dd" )
     public Date getCreateTime() {
         return createTime;
     }
@@ -393,6 +393,7 @@ public class SaleChance {
      *
      * @mbggenerated Tue Oct 31 08:30:02 CST 2017
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern="yyyy-MM-dd" )
     public Date getAssignTime() {
         return assignTime;
     }

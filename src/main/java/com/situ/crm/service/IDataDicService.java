@@ -22,4 +22,10 @@ public interface IDataDicService {
 	ServerResponse update(DataDic dataDic);
 
 	List<DataDic> findDataDicName();
+
+	/**
+	 * 查找客户等级
+	 * @return List<DataDic>
+	 */
+	List<DataDic> findLevel();
 }
