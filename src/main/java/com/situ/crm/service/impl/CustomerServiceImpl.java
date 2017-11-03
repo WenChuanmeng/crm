@@ -13,19 +13,30 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.situ.crm.common.DataGridResult;
 import com.situ.crm.common.ServerResponse;
+import com.situ.crm.mapper.CustomerLossMapper;
 import com.situ.crm.mapper.CustomerMapper;
+import com.situ.crm.mapper.CustomerOrderMapper;
 import com.situ.crm.pojo.Customer;
 import com.situ.crm.pojo.CustomerExample;
 import com.situ.crm.pojo.CustomerExample.Criteria;
+import com.situ.crm.pojo.CustomerLoss;
+import com.situ.crm.pojo.CustomerOrder;
 import com.situ.crm.service.ICustomerService;
 import com.situ.crm.service.ICustomerService;
 import com.situ.crm.util.Util;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService{
+	
 	@Autowired
 	private CustomerMapper customerMapper;
 
+	@Autowired
+	private CustomerOrderMapper customerOrderMapper;
+	
+	@Autowired
+	private CustomerLossMapper customerLossMapper;
+	
 	@Override
 	public DataGridResult findAll(Integer page, Integer rows, Customer customer, Date beginTime, Date endTime) {
 		DataGridResult result = new DataGridResult();
@@ -107,6 +118,35 @@ public class CustomerServiceImpl implements ICustomerService{
 			return ServerResponse.createSUCCESS("更改成功");
 		}
 		return ServerResponse.createERROR("服务器繁忙，请稍后再试");
+	}
+
+	@Override
+	public void checkCustomerLoss() {
+		
+		//1. 查找流失客户
+		List<Customer> customerList =  customerMapper.findLossCustomer();
+		for (Customer customer : customerList) {
+			//2.实例化用户流失实体
+			CustomerLoss customerLoss= new CustomerLoss();
+			customerLoss.setCustomerNo(customer.getNum());
+			customerLoss.setCustomerName(customer.getName());
+			customerLoss.setCustomerManager(customer.getManagerName());
+			customerLoss.setStatus(0);
+			//3.查找指定用户的最近的订单
+			CustomerOrder customerOrder = customerOrderMapper.findLastOrder(customer.getId());
+			
+			if (customerOrder == null) {
+				customerLoss.setLastOrderTime(null);
+			} else {
+				customerLoss.setLastOrderTime(customerOrder.getOrderDate());
+			}
+			
+			//4.添加到客户流失表
+			customerLossMapper.insert(customerLoss);
+			//5 将客户表customer中的status改成1
+			customer.setStatus(1);
+			customerMapper.updateByPrimaryKeySelective(customer);
+		}
 	}
 
 

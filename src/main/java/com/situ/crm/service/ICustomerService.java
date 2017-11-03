@@ -52,5 +52,10 @@ public interface ICustomerService {
 	 */
 	ServerResponse updateCustomerDevResult(Customer customer);
 
+	/**
+	 * 查找流失的用户
+	 */
+	void checkCustomerLoss();
+
 	/*List<Customer> findCustomerName();*/
 }

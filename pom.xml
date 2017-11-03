@@ -37,6 +37,7 @@
 		<commons-codec-version>1.6</commons-codec-version>
 
 		<c3p0-version>0.9.1.2</c3p0-version>
+		<quartz.version>2.2.1</quartz.version>
 	</properties>
 
 
@@ -238,6 +239,19 @@
 		    <groupId>com.fasterxml.jackson.core</groupId>  
 		    <artifactId>jackson-databind</artifactId>  
 		    <version>2.6.1</version>  
-		</dependency>  
+		</dependency> 
+		
+		<!-- quartz 定时任务-->
+		<dependency>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz</artifactId>
+		    <version>${quartz.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz-jobs</artifactId>
+		    <version>${quartz.version}</version>
+		</dependency>
+		
 	</dependencies>
 </project>

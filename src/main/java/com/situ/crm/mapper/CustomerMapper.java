@@ -93,4 +93,10 @@ public interface CustomerMapper {
      * @mbggenerated Tue Oct 31 08:30:02 CST 2017
      */
     int updateByPrimaryKey(Customer record);
+
+    /**
+     * 查找流失的客户
+     * @return
+     */
+	List<Customer> findLossCustomer();
 }

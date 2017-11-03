@@ -188,9 +188,9 @@ function openNewTab(url,icons) {
 	
 	<!-- toolbar 开始 -->
 	<div id="toolbar">
-		<!-- <div> 
+		 <div> 
 			 <a class="easyui-linkbutton" href="javascript:openUpdateDialog()" iconCls="icon-edit">添加</a>
-			<a class="easyui-linkbutton" href="javascript:openAddDialog()" iconCls="icon-add">添加</a> 
+			<!--<a class="easyui-linkbutton" href="javascript:openAddDialog()" iconCls="icon-add">添加</a> 
 			<a class="easyui-linkbutton" href="javascript:doDelete()" iconCls="icon-remove">删除</a>
 			<a class="easyui-linkbutton" href="javascript:openNewTab('customerLinkMan','icon-lxr')" iconCls="icon-lxr">联系人管理</a>
 			<a class="easyui-linkbutton" href="javascript:openNewTab('customerContact','icon-jwjl')" iconCls="icon-jwjl">交往记录管理</a>

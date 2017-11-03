@@ -300,4 +300,10 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 查找用户距离现在最近的下单的时间 -->
+  <select id="findLastOrder" parameterType="int" resultMap="BaseResultMap">
+  	SELECT <include refid="Base_Column_List" /> 
+  	FROM customer_order WHERE customer_id=#{id} GROUP BY order_date  DESC LIMIT 0,1
+  </select>
 </mapper>

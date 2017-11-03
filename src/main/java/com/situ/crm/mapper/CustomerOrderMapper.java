@@ -93,4 +93,11 @@ public interface CustomerOrderMapper {
      * @mbggenerated Tue Oct 31 08:30:02 CST 2017
      */
     int updateByPrimaryKey(CustomerOrder record);
+
+    /**
+     * 查找用户距离现在最近的下单的时间
+     * @param id
+     * @return CustomerOrder
+     */
+	CustomerOrder findLastOrder(Integer id);
 }
