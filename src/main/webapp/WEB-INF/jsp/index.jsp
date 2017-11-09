@@ -11,12 +11,19 @@
 <body class="easyui-layout">
 
 	<div region="north" style="height: 78px; background-color: #fff">
-	${user.name }
+	<table>
+		<tr>
+			<td width="85%"><div style="margin-left: 20px"><span style="font-size: 25;font-weight: 900" >Customer Relationship Management System</span></div></td>
+			<td style=""><div style="margin-top: 40px"><span style="font-size: 16;font-weight: 600">欢迎：${user.name }，权限：${user.roleName }</span></div></td>
+		</tr>
+	</table>
 	</div>
 	<div region="center">
 		<div class="easyui-tabs" fit="true" border="false" id="tabs">
 			<div title="首页" data-options="iconCls:'icon-home'">
-			
+				<div  style="width:200px; height:26px; margin: 15% auto;">
+					<span style="font-size: 30; font-weight: 700;">欢迎光临，${user.name }</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -71,22 +78,18 @@
 			</div>
 			<div title="统计报表" data-options="iconCls:'icon-tjbb'"
 				style="padding: 10px">
-				<a href="javascript:openTab('客户贡献分析','khgxfx.jsp','icon-khgxfx')"
+				<a href="javascript:openTab('客户贡献分析','${ctx }/customer/customerContributeAnalysisPage.action','icon-khgxfx')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-khgxfx'"
 					style="width: 150px;">客户贡献分析</a> <a
-					href="javascript:openTab('客户构成分析','khgcfx.jsp','icon-khgcfx')"
+					href="javascript:openTab('客户构成分析','${ctx }/customer/customerConstitutePage.action','icon-khgcfx')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-khgcfx'"
 					style="width: 150px;">客户构成分析</a> <a
-					href="javascript:openTab('客户服务分析','khfwfx.jsp','icon-khfwfx')"
+					href="javascript:openTab('客户服务分析','${ctx }/customerServiceShow/customerServiceAnalysisPage.action','icon-khfwfx')"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-khfwfx'"
-					style="width: 150px;">客户服务分析</a> <a
-					href="javascript:openTab('客户流失分析','khlsfx.jsp','icon-khlsfx')"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon-khlsfx'"
-					style="width: 150px;">客户流失分析</a>
+					style="width: 150px;">客户服务分析</a>
 			</div>
 			<div title="基础数据管理" data-options="iconCls:'icon-jcsjgl'"
 				style="padding: 10px">
@@ -119,33 +122,33 @@
 	</div>
 	
 	<!-- 修改密码 -->
-					<div id="dialog" class="easyui-dialog" closed="true" data-options="buttons:'#dialog-button'" title="修改密码" style="width:400px;padding:30px 60px">
-				<form id="passwordForm" action="${ctx }/users/updatePassword.action" method="post">
-						<div style="margin-bottom:20px">
-							<div>用户名:</div>
-							<input class="easyui-textbox" name="name" readonly="readonly" value="${user.name }" style="width:100%;height:32px">
-						</div>
-						<div style="margin-bottom:20px">
-							<div>前密码:</div>
-							<input class="easyui-textbox" required="true" type="password" name="password" style="width:100%;height:32px">
-						</div>
-						<div style="margin-bottom:20px">
-							<div>重置密码:</div>
-							<input class="easyui-textbox" id="newpasswordId" required="true" type="password" name="newpassword" style="width:100%;height:32px">
-						</div>
-						<div style="margin-bottom:20px">
-							<div>确认密码:</div>
-							<input class="easyui-textbox" id="repasswordId" required="true" type="password" name="repassword" style="width:100%;height:32px">
-						</div>
-						<!-- dialog-button 开始-->
-					<div id="dialog-button">
-						<a href="javascript:doSave()" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-						<a href="javascript:closeDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+		<div id="dialog" class="easyui-dialog" closed="true" data-options="buttons:'#dialog-button'" title="修改密码" style="width:400px;padding:30px 60px">
+			<form id="passwordForm" action="${ctx }/users/updatePassword.action" method="post">
+					<div style="margin-bottom:20px">
+						<div>用户名:</div>
+						<input id="userName" class="easyui-textbox" name="name" readonly="readonly"  style="width:100%;height:32px">
 					</div>
-					<!-- dialog-button 结束-->
-				</form>
+					<div style="margin-bottom:20px">
+						<div>前密码:</div>
+						<input class="easyui-textbox" required="true" type="password" name="password" style="width:100%;height:32px">
 					</div>
-					<!-- 修改密码 -->
+					<div style="margin-bottom:20px">
+						<div>重置密码:</div>
+						<input class="easyui-textbox" id="newpasswordId" required="true" type="password" name="newpassword" style="width:100%;height:32px">
+					</div>
+					<div style="margin-bottom:20px">
+						<div>确认密码:</div>
+						<input class="easyui-textbox" id="repasswordId" required="true" type="password" name="repassword" style="width:100%;height:32px">
+					</div>
+					<!-- dialog-button 开始-->
+				<div id="dialog-button">
+					<a href="javascript:doSave()" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+					<a href="javascript:closeDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+				</div>
+				<!-- dialog-button 结束-->
+			</form>
+		</div>
+		<!-- 修改密码 -->
 					
 	
 <script type="text/javascript">
@@ -165,6 +168,8 @@
 	}
 	
 	function openUpdatePasswordDialog() {
+		$("#passwordForm").form("clear");
+		$("#userName").textbox('setValue','${user.name }');
 		$("#dialog").dialog("open")
 	}
 	

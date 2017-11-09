@@ -26,6 +26,7 @@ import com.situ.crm.service.ICustomerServiceDealResultService;
 import com.situ.crm.service.ICustomerServiceDealService;
 import com.situ.crm.service.ICustomerServiceShowService;
 import com.situ.crm.service.IUserService;
+import com.situ.crm.vo.CustomerServiceAnalysis;
 
 @Controller
 @RequestMapping("/customerServiceShow")
@@ -80,4 +81,17 @@ public class CustomerServiceShowController {
 	public List<User> findAssignMan() {
 		return userService.findAssignMan();
 	}
+	
+	//跳转到客户服务分析界面
+	@RequestMapping("/customerServiceAnalysisPage")
+	private String customerServiceAnalysisPage() {
+		return "customer_service_analysis";
+	}
+	
+	@RequestMapping("customerServiceAnalysis")
+	@ResponseBody
+	private ServerResponse<List<CustomerServiceAnalysis>> customerServiceAnalysis() {
+		return customerServiceShowService.customerServiceAnalysis();
+	}
+	
 }

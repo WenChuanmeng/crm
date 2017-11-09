@@ -143,7 +143,7 @@ function openNewTab(url,icons) {
 	function openUpdateDialog() {
 		var selections = $("#datagrid").datagrid("getSelections");
 		if(selections.length == 0) {
-			$.messager.alert("系统提示", "请选择要删除的数据");
+			$.messager.alert("系统提示", "请选择要反馈的数据");
 			return;
 		}
 		var row = selections[0];
@@ -200,7 +200,7 @@ function openNewTab(url,icons) {
 	<!-- toolbar 开始 -->
 	<div id="toolbar">
 		<div> 
-			 <a class="easyui-linkbutton" href="javascript:openUpdateDialog()" iconCls="icon-edit">添加</a>
+			 <a class="easyui-linkbutton" href="javascript:openUpdateDialog()" iconCls="icon-edit">反馈</a>
 			<!-- <a class="easyui-linkbutton" href="javascript:openAddDialog()" iconCls="icon-add">添加</a> 
 			<a class="easyui-linkbutton" href="javascript:doDelete()" iconCls="icon-remove">删除</a>
 			<a class="easyui-linkbutton" href="javascript:openNewTab('customerLinkMan','icon-lxr')" iconCls="icon-lxr">联系人管理</a>

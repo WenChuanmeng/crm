@@ -2,7 +2,12 @@ package com.situ.crm.mapper;
 
 import com.situ.crm.pojo.Customer;
 import com.situ.crm.pojo.CustomerExample;
+import com.situ.crm.vo.CustomerConstitute;
+import com.situ.crm.vo.CustomerContributeAnalysis;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface CustomerMapper {
@@ -99,4 +104,18 @@ public interface CustomerMapper {
      * @return
      */
 	List<Customer> findLossCustomer();
+
+	/**
+	 * 查找客户的贡献总金额
+	 * @param map
+	 * @return
+	 */
+	List<CustomerContributeAnalysis> customerContributeAnalysis(@Param("map")Map<String, Object> map);
+
+	/**
+	 * 查询客户等级的数量
+	 * @return List<CustomerConstitute>
+	 */
+	List<CustomerConstitute> customerConstitute();
+
 }

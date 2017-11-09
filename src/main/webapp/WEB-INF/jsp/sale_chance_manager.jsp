@@ -146,7 +146,7 @@
 	function openUpdateDialog() {
 		var selections = $("#datagrid").datagrid("getSelections");
 		if(selections.length == 0) {
-			$.messager.alert("系统提示", "请选择要删除的数据");
+			$.messager.alert("系统提示", "请选择要修改的数据");
 			return;
 		}
 		var row = selections[0];
@@ -193,6 +193,30 @@
 	    // 2017-01-01 02:23:06   yyyy-MM-dd hh:mm:ss
 	    return year+"-"+this.formatZero(month)+"-"+this.formatZero(day)+" "+this.formatZero(hours)+":"+this.formatZero(minutes)+":"+this.formatZero(seconds);
 	}
+	/* 导出表格 */
+	function createExcel() {
+		window.location.href="${ctx}/saleChance/createExcel.action";
+	}
+	
+	/* 打开导入表格的dialog */
+	function openReadExcel() {
+		$("#dialogExcel").dialog("open")
+	}
+	
+	/* 上传Excel */
+	function uploadExcel() {
+		var formData = new FormData($( "#uploadForm" )[0]);
+		var options = {
+			url : "${ctx }/saleChance/uploadExcel.action",
+			type : "post",
+			datatype : "json",
+			data : formData,
+			success : function (data) {
+				
+			}
+		};
+		$.ajax(options);
+	}
 </script>
 </head>
 <body>
@@ -204,6 +228,8 @@
 			<a class="easyui-linkbutton" href="javascript:openAddDialog()" iconCls="icon-add">添加</a>
 			<a class="easyui-linkbutton" href="javascript:openUpdateDialog()" iconCls="icon-edit">修改</a>
 			<a class="easyui-linkbutton" href="javascript:doDelete()" iconCls="icon-remove">删除</a>
+			<a class="easyui-linkbutton" href="javascript:createExcel()" iconCls="icon-add">导出表格</a>
+			<a class="easyui-linkbutton" href="javascript:openReadExcel()" iconCls="icon-add">导入表格</a>
 		</div>
 		<div>
 			<%-- 数据字典名：<input type="text" id="saleChanceName" class="easyui-combobox"
@@ -230,6 +256,23 @@
 		</div>
 	</div>
 	<!-- toolbar 结束 -->
+	
+	<!-- 导入Excel表格dialog -->
+	<div id="dialogExcel" class="easyui-dialog" title="导入Excel" style="width:400px;height:200px;padding:10px"
+			data-options="
+				closed:true,
+				iconCls: 'icon-save',
+			">
+		<form id="uploadForm" action="" method="post" enctype="multipart/form-data">
+			<div style="margin-bottom:20px">
+				<input class="easyui-filebox" name="file" data-options="prompt:'选择Excel'" style="width:80%">
+			</div>
+		</form>
+		<div>
+			<a href="Javascript:uploadExcel()" class="easyui-linkbutton" style="width:100%">Upload</a>
+		</div>
+	</div>
+	<!-- 导入Excel表格dialog -->
 	
 	<!-- 添加和修改的dialog 开始 -->
 	<div id="dialog" style="width:700;height:280,padding: 10px 20px">

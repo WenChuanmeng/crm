@@ -12,7 +12,7 @@
 function openNewTab(url,icons) {
 	var selections = $("#datagrid").datagrid("getSelections");
 	if(selections.length == 0) {
-		$.messager.alert("系统提示", "请选择要修改的数据");
+		$.messager.alert("系统提示", "请选择要查看的数据");
 		return;
 	}
 	var row = selections[0];
@@ -140,7 +140,7 @@ function openNewTab(url,icons) {
 	function openUpdateDialog() {
 		var selections = $("#datagrid").datagrid("getSelections");
 		if(selections.length == 0) {
-			$.messager.alert("系统提示", "请选择要删除的数据");
+			$.messager.alert("系统提示", "请选择要修改的数据");
 			return;
 		}
 		var row = selections[0];

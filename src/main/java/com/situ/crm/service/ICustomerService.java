@@ -7,6 +7,8 @@ import java.util.List;
 import com.situ.crm.common.DataGridResult;
 import com.situ.crm.common.ServerResponse;
 import com.situ.crm.pojo.Customer;
+import com.situ.crm.vo.CustomerConstitute;
+import com.situ.crm.vo.CustomerContributeAnalysis;
 
 public interface ICustomerService {
 	/**
@@ -57,5 +59,20 @@ public interface ICustomerService {
 	 */
 	void checkCustomerLoss();
 
-	/*List<Customer> findCustomerName();*/
+	/**
+	 * 查找客户端的贡献
+	 * @param page
+	 * @param rows
+	 * @param contributeAnalysis
+	 * @return DataGridResult
+	 */
+	DataGridResult customerContributeAnalysis(Integer page, Integer rows,
+			CustomerContributeAnalysis contributeAnalysis);
+
+	/**
+	 * 查询各个用户等级的数量
+	 * @return ServerResponse<CustomerConstitute>
+	 */
+	ServerResponse<List<CustomerConstitute>> customerConstitute();
+
 }

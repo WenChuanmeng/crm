@@ -555,10 +555,21 @@
   
   <!-- 查找流失的客户 -->
   <select id="findLossCustomer" resultMap="BaseResultMap">
-  	SELECT <include refid="Base_Column_List" /> FROM customer AS c 
-	WHERE id NOT IN 
-	(SELECT customer_id FROM customer_order WHERE DATE_ADD(order_date,INTERVAL 6 MONTH)>NOW()) 
-	AND c.status=0
+  	select <include refid="Base_Column_List" /> from customer as c 
+	where id not in 
+	(select customer_id from customer_order where date_add(order_date,interval 6 month)>now()) 
+	and c.status=0
+  </select>
+  
+  <!-- 查找客户的贡献总金额 -->
+  <select id="customerContributeAnalysis"  resultType="com.situ.crm.vo.CustomerContributeAnalysis">
+  	select c.name,sum(oi.sum) as sum from customer as c left join customer_order as co on c.id=co.customer_id 
+	left join order_item as oi on co.id=oi.order_id group by c.id order by sum desc
+  </select>
+  
+  <!-- 查询客户等级的数量 -->
+  <select id="customerConstitute" resultType="com.situ.crm.vo.CustomerConstitute">
+  	select level as levelname,count(*) as levelnum from customer group by level
   </select>
   
 </mapper>

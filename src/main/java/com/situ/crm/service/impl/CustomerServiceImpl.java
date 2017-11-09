@@ -2,8 +2,10 @@ package com.situ.crm.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ import com.situ.crm.pojo.CustomerOrder;
 import com.situ.crm.service.ICustomerService;
 import com.situ.crm.service.ICustomerService;
 import com.situ.crm.util.Util;
+import com.situ.crm.vo.CustomerConstitute;
+import com.situ.crm.vo.CustomerContributeAnalysis;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService{
@@ -149,14 +153,37 @@ public class CustomerServiceImpl implements ICustomerService{
 		}
 	}
 
+	@Override
+	public DataGridResult customerContributeAnalysis(Integer page, Integer rows,
+			CustomerContributeAnalysis contributeAnalysis) {
+		
+		DataGridResult result = new DataGridResult();
+		CustomerExample customerExample = new CustomerExample();
+		//1、设置分页 
+		PageHelper.startPage(page, rows);
+		//2、执行查询
+		//rows(分页之后的数据)
+		Criteria createCriteria = customerExample.createCriteria();
+		Map<String, Object> map = new HashMap<String, Object>();
+		String name = contributeAnalysis.getName();
+		map.put("name", name);
+		List<CustomerContributeAnalysis> customerList = customerMapper.customerContributeAnalysis(map);
+		//total
+		PageInfo<CustomerContributeAnalysis> pageInfo = new PageInfo<>(customerList);
+		int total = (int)pageInfo.getTotal();
+		
+		result.setTotal(total);
+		result.setRows(customerList);
+		return result;
+	}
 
-	/*@Override
-	public List<Customer> findCustomerName() {
-		LinkedList<Customer> findCustomerName = customerMapper.findCustomerName();
-		Customer customer = new Customer();
-		customer.setCustomerName(null);
-		findCustomerName.addFirst(customer);
-		return findCustomerName;
-	}*/
+	@Override
+	public ServerResponse<List<CustomerConstitute>> customerConstitute() {
+		List<CustomerConstitute> customerConstituteList = customerMapper.customerConstitute();
+		if (customerConstituteList.size() != 0) {
+			return ServerResponse.createSUCCESS("查询成功", customerConstituteList);
+		}
+		return ServerResponse.createERROR("查询失败");
+	}
 
 }

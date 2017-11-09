@@ -8,9 +8,9 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	/* 查找 */
-	function doSearch(value){
+	function doSearch(){
 		$("#datagrid").datagrid("load",{
-			'productName':value
+			'name':$("#s_productName").val()
 		})
 	}
 	/* 删除 */
@@ -108,7 +108,8 @@
 		<a class="easyui-linkbutton" href="javascript:openUpdateDialog()" iconCls="icon-edit">修改</a>
 		<a class="easyui-linkbutton" href="javascript:doDelete()" iconCls="icon-remove">删除</a>
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		<input class="easyui-searchbox" data-options="prompt:'产品名称',searcher:doSearch" style="width:150px"></input>
+	   <input type="text" placeholder="商品名称" id="s_productName"/>
+	   <a href="javascript:doSearch();" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 	</div>
 	<!-- toolbar 结束 -->
 	

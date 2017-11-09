@@ -2,8 +2,10 @@ package com.situ.crm.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -73,4 +75,35 @@ public class SaleChanceController {
 	public List<User> findAssignMan() {
 		return userService.findAssignMan();
 	}
+	
+	@RequestMapping("/createExcel")
+	@ResponseBody
+	private void createExcel(HttpServletResponse response) {
+		try {
+			/*//1、查找用户列表
+			List<SaleChance> list = saleChanceService.findAll();
+			//2、导出
+*/			response.setContentType("application/x-execl");
+			response.setHeader("Content-Disposition", "attachment;filename=" + new String("用户列表.xls".getBytes(), "ISO-8859-1"));
+			ServletOutputStream outputStream = response.getOutputStream();
+			saleChanceService.createExcel(outputStream);
+			if(outputStream != null){
+				outputStream.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+	}
+	
+	@RequestMapping("/uploadExcel")
+	@ResponseBody
+	private ServerResponse uploadExcel() {
+		
+		
+		
+		return null;
+	}
+	
+	
 }

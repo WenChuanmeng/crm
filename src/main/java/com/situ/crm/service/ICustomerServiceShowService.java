@@ -7,6 +7,7 @@ import java.util.List;
 import com.situ.crm.common.DataGridResult;
 import com.situ.crm.common.ServerResponse;
 import com.situ.crm.pojo.CustomerService;
+import com.situ.crm.vo.CustomerServiceAnalysis;
 
 public interface ICustomerServiceShowService {
 	/**
@@ -53,6 +54,12 @@ public interface ICustomerServiceShowService {
 	 * @return ServerResponse
 	 */
 	ServerResponse updateCustomerServiceDevResult(CustomerService customerService);
+
+	/**
+	 * 查找服务类型及其次数
+	 * @return ServerResponse<CustomerServiceAnalysis>
+	 */
+	ServerResponse<List<CustomerServiceAnalysis>> customerServiceAnalysis();
 
 	/*List<CustomerService> findCustomerServiceName();*/
 }

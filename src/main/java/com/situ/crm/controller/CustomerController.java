@@ -21,6 +21,8 @@ import com.situ.crm.pojo.User;
 import com.situ.crm.service.ICustomerService;
 import com.situ.crm.service.IDataDicService;
 import com.situ.crm.service.IUserService;
+import com.situ.crm.vo.CustomerConstitute;
+import com.situ.crm.vo.CustomerContributeAnalysis;
 
 @Controller
 @RequestMapping("/customer")
@@ -84,5 +86,31 @@ public class CustomerController {
 	@ResponseBody
 	private List<DataDic> findLevel() {
 		return dataDicService.findLevel();
+	}
+	
+	//客户贡献首页
+	@RequestMapping("/customerContributeAnalysisPage")
+	private String customerContributeAnalysisPage() {
+		return "customer_contribute_analysis";
+	}
+	
+	//查询客户贡献总金额
+	@RequestMapping("/customerContributeAnalysis")
+	@ResponseBody
+	private DataGridResult customerContributeAnalysis(Integer page, Integer rows, CustomerContributeAnalysis contributeAnalysis) {
+		return customerService.customerContributeAnalysis(page, rows, contributeAnalysis);
+	}
+	
+	//客户构成页面
+	@RequestMapping("/customerConstitutePage")
+	private String customerConstitutePage() {
+		return "customer_constitute";
+	}
+	
+	//查询每个客户等级的数量
+	@RequestMapping("/customerConstitute")
+	@ResponseBody
+	private ServerResponse<List<CustomerConstitute>> customerConstitute() {
+		return customerService.customerConstitute();
 	}
 }

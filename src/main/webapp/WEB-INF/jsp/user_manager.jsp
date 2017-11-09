@@ -10,7 +10,7 @@
 	/* 查找 */
 	function doSearch(value){
 		$("#datagrid").datagrid("load",{
-			'userName':value
+			'name':$("#s_userName").val()
 		})
 	}
 	
@@ -115,7 +115,8 @@
 		<a class="easyui-linkbutton" href="javascript:openUpdateDialog()" iconCls="icon-edit">修改</a>
 		<a class="easyui-linkbutton" href="javascript:doDelete()" iconCls="icon-remove">删除</a>
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		<input class="easyui-searchbox" data-options="prompt:'用户名',searcher:doSearch" style="width:150px"></input>
+		<input type="text" placeholder="用户名" id="s_userName"/>
+	   <a href="javascript:doSearch();" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 	</div>
 	<!-- toolbar 结束 -->
 	

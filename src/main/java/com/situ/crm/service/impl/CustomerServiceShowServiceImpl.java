@@ -22,6 +22,7 @@ import com.situ.crm.service.ICustomerServiceDealResultService;
 import com.situ.crm.service.ICustomerServiceDealService;
 import com.situ.crm.service.ICustomerServiceShowService;
 import com.situ.crm.util.Util;
+import com.situ.crm.vo.CustomerServiceAnalysis;
 
 @Service
 public class CustomerServiceShowServiceImpl implements ICustomerServiceShowService{
@@ -107,6 +108,17 @@ public class CustomerServiceShowServiceImpl implements ICustomerServiceShowServi
 			return ServerResponse.createSUCCESS("更改成功");
 		}
 		return ServerResponse.createERROR("服务器繁忙，请稍后再试");
+	}
+
+	@Override
+	public ServerResponse<List<CustomerServiceAnalysis>> customerServiceAnalysis() {
+		
+		List<CustomerServiceAnalysis> analysisList = customerServiceMapper.customerServiceAnalysis();
+		
+		if (analysisList.size() != 0) {
+			return ServerResponse.createSUCCESS("查询成功", analysisList);
+		}
+		return ServerResponse.createERROR("查询失败");
 	}
 
 

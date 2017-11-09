@@ -1,8 +1,9 @@
 package com.situ.crm.service;
 
+import java.io.IOException;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+
+import javax.servlet.ServletOutputStream;
 
 import com.situ.crm.common.DataGridResult;
 import com.situ.crm.common.ServerResponse;
@@ -51,6 +52,14 @@ public interface ISaleChanceService {
 	 * @return ServerResponse
 	 */
 	ServerResponse updateSaleChanceDevResult(SaleChance saleChance);
+
+	/**
+	 * 生成Excel表格
+	 * @return ServerResponse
+	 * @throws IOException 
+	 */
+
+	void createExcel(ServletOutputStream outputStream) throws IOException;
 
 	/*List<SaleChance> findSaleChanceName();*/
 }
