@@ -61,5 +61,7 @@ public interface ISaleChanceService {
 
 	void createExcel(ServletOutputStream outputStream) throws IOException;
 
+	int uploadExcel(String fileName);
+
 	/*List<SaleChance> findSaleChanceName();*/
 }

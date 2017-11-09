@@ -259,9 +259,10 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
      * @param InputStream
      * @return Map 包含单元格数据内容的Map对象
      */
-    public Map<Integer, String> readExcelContent(InputStream is) {
+    public int readExcelContent(InputStream is) {
         Map<Integer, String> content = new HashMap<Integer, String>();
         String str = "";
+        int result = 0 ;
         try {
             fs = new POIFSFileSystem(is);
             wb = new HSSFWorkbook(fs);
@@ -271,10 +272,10 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
         sheet = wb.getSheetAt(0);
         // 得到总行数
         int rowNum = sheet.getLastRowNum();
-        row = sheet.getRow(0);
+        row = sheet.getRow(2);
         int colNum = row.getPhysicalNumberOfCells();
         // 正文内容应该从第二行开始,第一行为表头的标题
-        for (int i = 1; i <= rowNum; i++) {
+        for (int i = 2; i <= rowNum; i++) {
         	SaleChance saleChance = new SaleChance();
             row = sheet.getRow(i);
             int j = 0;
@@ -312,7 +313,7 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
 					saleChance.setCreateTime(date);
 					break;
 				case 7:
-					saleChance.setStatus(Integer.parseInt(getCellFormatValue(row.getCell((short) j)).trim()));
+					saleChance.setStatus((int) Double.parseDouble(getCellFormatValue(row.getCell((short) j)).trim()));
 					break;
 
 				default:
@@ -320,10 +321,11 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
 				}
                 j++;
             }
-            content.put(i, str);
-            str = "";
+            result = saleChanceMapper.insert(saleChance);
+            result += result;
         }
-        return content;
+        System.out.println(result+"+++++++++++++++++++");
+        return result;
     }
 
     /**
@@ -437,18 +439,23 @@ public class SaleChanceServiceImpl implements ISaleChanceService{
 
     }
 
-    public  void readExcel() {
+
+	@Override
+	public int uploadExcel(String fileName) {
+		int result = 0;
         try {
 
             // 对读取Excel表格内容测试
-            InputStream is2 = new FileInputStream("D:\\用户列表.xls");
-            readExcelContent(is2);
+            InputStream is2 = new FileInputStream("E:\\"+fileName);
+            result  =  readExcelContent(is2);
+            
 
         } catch (FileNotFoundException e) {
             System.out.println("未找到指定路径的文件!");
             e.printStackTrace();
         }
-    }
+        return result;
+	}
 
 
 }

@@ -205,17 +205,24 @@
 	
 	/* 上传Excel */
 	function uploadExcel() {
-		var formData = new FormData($( "#uploadForm" )[0]);
-		var options = {
-			url : "${ctx }/saleChance/uploadExcel.action",
-			type : "post",
-			datatype : "json",
-			data : formData,
-			success : function (data) {
-				
-			}
-		};
-		$.ajax(options);
+		/*  var formData = new FormData($( "#uploadForm" )[0]);  
+	     $.ajax({  
+	          url: '${ctx }/saleChance/uploadExcel.action',  
+	          type: 'POST',
+	          datatype:"json",
+	          data: formData,  
+	          async: false,  
+	          cache: false,  
+	          contentType: false,  
+	          processData: false,  
+	          success: function (data) {
+	              alert(data.msg);  
+	          },  
+	          error: function (returndata) {  
+	              alert(data.msg);  
+	          }  
+	     });  */
+		$("#uploadForm").submit();
 	}
 </script>
 </head>
@@ -263,13 +270,13 @@
 				closed:true,
 				iconCls: 'icon-save',
 			">
-		<form id="uploadForm" action="" method="post" enctype="multipart/form-data">
+		<form name="Form2" id="uploadForm" action="${ctx }/saleChance/uploadExcel.action" method="post"  enctype="multipart/form-data">
 			<div style="margin-bottom:20px">
 				<input class="easyui-filebox" name="file" data-options="prompt:'选择Excel'" style="width:80%">
 			</div>
 		</form>
 		<div>
-			<a href="Javascript:uploadExcel()" class="easyui-linkbutton" style="width:100%">Upload</a>
+			<a href="Javascript:uploadExcel()" class="easyui-linkbutton" style="width:100%">导入</a>
 		</div>
 	</div>
 	<!-- 导入Excel表格dialog -->
