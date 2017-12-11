@@ -15,7 +15,9 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/resources/thrlib/jquery-easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="${ctx}/resources/thrlib/jquery-easyui/themes/icon.css">
 <script type="text/javascript" src="${ctx}/resources/thrlib/jquery-easyui/jquery.min.js"></script>
+<script src="http://www.jq22.com/jquery/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/thrlib/jquery-easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${ctx}/resources/thrlib/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="${ctx}/resources/thrlib/jquery-easyui/jquery.edatagrid.js"></script>
 <script type="text/javascript" src="${ctx}/resources/thrlib/echarts.js"></script>
+<script language="javascript" src="${ctx}/resources/js/jquery.jqprint.js"></script>
